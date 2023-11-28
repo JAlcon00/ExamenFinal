@@ -1,0 +1,45 @@
+<!-- Formulario para añadir productos -->
+<form #productForm="ngForm">
+  <div>
+    <label for="productName">Nombre del Producto:</label>
+    <input type="text" id="productName" name="productName" [(ngModel)]="product.name" #productName="ngModel" required>
+    <div *ngIf="!product.name && nameTouched" class="error">
+      El nombre del producto es requerido.
+    </div>
+  </div>
+  
+  <div>
+    <label for="productPrice">Precio:</label>
+    <input type="number" id="productPrice" name="productPrice" [(ngModel)]="product.price" #productPrice="ngModel" required>
+    <div *ngIf="product.price && priceTouched" class="error">
+      El precio del producto es requerido.
+    </div>
+  </div>
+  
+    <div>
+      <label for="productCategory">Categoría:</label>
+    <select id="productCategory" name="productCategory" [(ngModel)]="product.category" #productCategory="ngModel" required>
+      <option value="">Seleccione una categoría</option>
+        <option value="categoria1">Categoria 1</option>
+        <option value="categoria2">Categoria 2</option>
+        <option value="categoria3">Categoria 3</option>
+        <option value="categoria4">Categoria 4</option>
+        <option value="categoria5">Categoria 5</option>
+        <!-- Agrega más categorías aquí -->
+      </select>
+      <div *ngIf="product.category && categoryTouched" class="error">
+        Debes seleccionar una categoría.
+      </div>
+    </div>
+  
+    <button (click)="addProduct()" [disabled]="!productForm.valid">Agregar</button>
+    <button (click)="clearAllProducts()" [disabled]="products.length === 0">Limpiar</button>
+  </form>
+  
+  <!-- Lista de productos -->
+  <div *ngFor="let product of products; let i = index">
+    <app-product-item [product]="product"></app-product-item>
+    <button class="delete-button" (click)="deleteProduct(i)">Eliminar Producto</button>
+    
+  </div>
+  
